@@ -6,4 +6,4 @@ Ultimately the intent is that this will facilitate the creation of templates int
 for testing and deployment.
 
 # demo
-[![asciicast](https://asciinema.org/a/Xg8bXJ4u2c4GhWDGr8Qeg5XtZ.svg)](https://asciinema.org/a/Xg8bXJ4u2c4GhWDGr8Qeg5XtZ)
+[![asciicast](https://asciinema.org/a/MVNXWg0QOXbOFbSdpdjYoSQE7.svg)](https://asciinema.org/a/MVNXWg0QOXbOFbSdpdjYoSQE7)

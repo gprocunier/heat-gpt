@@ -16,7 +16,9 @@ def interact(max_width):
     For example, if the question was "Create a VM with 2 CPUs and 4GB of RAM", the output might be:
 
     heat_template_version: wallaby
+
     description: create an instance
+
     resources:
       my_vm:
         type: OS::Nova::Server
@@ -27,7 +29,8 @@ def interact(max_width):
           - network: private
 
 
-    Ensure all responses are complete and functional templates with the appropriate headeres and sections.
+    Ensure all responses are complete and functional templates with the appropriate heat headers and sections.
+    Omit all but the required elements of the template.
 
     Now, QUESTION: 
     '''
@@ -39,9 +42,9 @@ def interact(max_width):
             
             while True:
                 response = openai.Completion.create(
-                  engine="text-davinci-002",
+                  engine="text-davinci-003",
                   prompt=full_prompt,
-                  max_tokens=5000  # Increase the max_tokens limit
+                  max_tokens=2000  # Increase the max_tokens limit
                 )
                 
                 response_text = response.choices[0].text.strip()

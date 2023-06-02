@@ -1,4 +1,4 @@
-# heat-copilot
+# heat-gpt
 
 Provide a valid api token that has a usable wallet of tokens and start building.
 

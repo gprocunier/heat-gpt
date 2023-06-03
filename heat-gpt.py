@@ -3,6 +3,7 @@
 import openai
 import argparse
 import textwrap
+import os
 
 # Set your API key here
 openai.api_key = 'your-api-key'
@@ -10,8 +11,8 @@ openai.api_key = 'your-api-key'
 def interact(max_width):
     # Define the prompt
     prompt_prefix = '''
-    The following question denoted by "QUESTION: " is to be interpreted as a task for an OpenStack heat template, 
-    and the desired output must be in the form of a heat template. 
+    The following question denoted by "QUESTION: " is to be interpreted as a task for an OpenStack heat template,
+    and the desired output must be in the form of a heat template.
 
     For example, if the question was "Create a VM with 2 CPUs and 4GB of RAM", the output might be:
 
@@ -32,21 +33,22 @@ def interact(max_width):
     Ensure all responses are complete and functional templates with the appropriate heat headers and sections.
     Omit all but the required elements of the template.
 
-    Now, QUESTION: 
+    Now, QUESTION:
     '''
-    
+
     while True:
         try:
+            print('Please enter your prompt')
             message = input('> ')
             full_prompt = f'{prompt_prefix.strip()} {message}'
-            
+
             while True:
                 response = openai.Completion.create(
                   engine="text-davinci-003",
                   prompt=full_prompt,
                   max_tokens=2000  # Increase the max_tokens limit
                 )
-                
+
                 response_text = response.choices[0].text.strip()
 
                 # Check if the response is likely to be YAML
@@ -64,11 +66,19 @@ def interact(max_width):
                 if decision.lower() == 'y':
                     # Ask the user for a name for the heat template
                     filename = input('Please enter a name for the heat template: ')
+
+                    # Remove any existing file extension from filename
+                    filename = os.path.splitext(filename)[0]
+
+                    # Add .yaml extension
+                    filename += '.yaml'
+
                     # Write the response to a file
-                    with open(f'{filename}.yaml', 'w') as f:
+                    with open(filename, 'w') as f:
                         f.write(response_text)
-                    print(f'Template saved as {filename}.yaml')
+                    print(f'Template saved as {filename}')
                     break
+
                 elif decision.lower() == 'n':
                     # Go back to the main prompt
                     break
@@ -92,4 +102,3 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     interact(args.max_width)
-

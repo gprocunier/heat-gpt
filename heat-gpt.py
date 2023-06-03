@@ -9,6 +9,17 @@ import os
 openai.api_key = 'your-api-key'
 
 def interact(max_width):
+    print("Welcome to heat-gpt")
+    use_git_repo = input("Would you like to store your templates in a local git repo? (Y/N) ")
+
+    if use_git_repo.lower() == "y":
+        repo_path = input("Please enter the local path to your git repo folder: ")
+        save_path = repo_path
+    else:
+        repo_path = None
+        save_path = os.getcwd()  # Save in the current working directory
+        print("Templates will be stored in the current folder.")
+
     # Define the prompt
     prompt_prefix = '''
     The following question denoted by "QUESTION: " is to be interpreted as a task for an OpenStack heat template,
@@ -74,9 +85,11 @@ def interact(max_width):
                     filename += '.yaml'
 
                     # Write the response to a file
-                    with open(filename, 'w') as f:
+                    file_path = os.path.join(save_path, filename) if repo_path else filename
+                    with open(file_path, 'w') as f:
                         f.write(response_text)
-                    print(f'Template saved as {filename}')
+                    print(f'Template saved as {file_path}')
+
                     break
 
                 elif decision.lower() == 'n':
@@ -86,7 +99,7 @@ def interact(max_width):
                     # Regenerate the answer
                     continue
                 else:
-                    print("Invalid response. Please enter Y, N or R.")
+                    print("Invalid response. Please enter Y, N, or R.")
 
         except KeyboardInterrupt:
             print('\nExiting...')

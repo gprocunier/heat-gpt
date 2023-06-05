@@ -10,10 +10,10 @@ openai.api_key = 'your-api-key'
 
 def interact(max_width):
     print("Welcome to heat-gpt")
-    use_git_repo = input("Would you like to store your templates in a local git repo? (Y/N) ")
+    use_git_repo = input("Would you like to store your templates in a local project folder? (Y/N) ")
 
     if use_git_repo.lower() == "y":
-        repo_path = input("Please enter the local path to your git repo folder: ")
+        repo_path = input("Please enter the local path to your project folder: ")
         save_path = repo_path
     else:
         repo_path = None
